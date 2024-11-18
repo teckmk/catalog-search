@@ -6,6 +6,9 @@ import { Pagination } from './components/Pagination';
 import { Database } from 'lucide-react';
 import axios from 'axios';
 
+// Get the base URL from the current environment
+const baseURL = import.meta.env.PROD ? '' : 'http://localhost:3000';
+
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +24,7 @@ function App() {
   const fetchProducts = async (page = 1) => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/search`, {
+      const { data } = await axios.get(`${baseURL}/api/search`, {
         params: {
           query: searchQuery,
           page,
@@ -50,7 +53,7 @@ function App() {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:3000/api/upload', formData, {
+      await axios.post(`${baseURL}/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
